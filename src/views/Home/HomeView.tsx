@@ -1,7 +1,6 @@
 import React from "react";
 import { Dimensions, ScrollView, Text, View } from "react-native";
 import { Icon } from "@rneui/base";
-import { FAB } from "@rneui/themed";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import { Categoria } from "../../model/entities/Categoria";
@@ -109,7 +108,7 @@ class HomeView extends React.Component<any, any> {
 
                   <ScrollView>
                     {
-                      renderPrevisoes(this.state.previsoes)
+                      renderPrevisoes(this, props)
                     }
                   </ScrollView>
                 </View>

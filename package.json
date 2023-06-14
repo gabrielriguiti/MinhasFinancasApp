@@ -21,6 +21,7 @@
     "moment": "^2.29.4",
     "react": "18.2.0",
     "react-native": "^0.71.3",
+    "react-native-alerts": "^0.1.8",
     "react-native-calendar-picker": "^7.1.4",
     "react-native-chart-kit": "^6.12.0",
     "react-native-linear-gradient": "^2.6.2",

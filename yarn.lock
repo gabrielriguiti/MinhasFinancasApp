@@ -6145,6 +6145,11 @@ react-is@^17.0.1:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-alerts@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.npmjs.org/react-native-alerts/-/react-native-alerts-0.1.8.tgz"
+  integrity sha512-TI40CI8CT3Ds9hMisQ8CDScQrdPWGV/UD6Vj4HeOPLZY6IxZ5xXKARYR0iO5fpW/A//D7NIsruwBWfufRUaFIA==
+
 react-native-calendar-picker@^7.1.4:
   version "7.1.4"
   resolved "https://registry.npmjs.org/react-native-calendar-picker/-/react-native-calendar-picker-7.1.4.tgz"

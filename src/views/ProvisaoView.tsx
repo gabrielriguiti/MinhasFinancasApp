@@ -1,24 +1,24 @@
 import React from "react";
 import { Modal, StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
-import { Button, Stack, Switch, TextInput } from "@react-native-material/core";
+import { Button, TextInput } from "@react-native-material/core";
 
 import { Icon } from "@rneui/base";
-import { getDBConnection } from "../database/db-service";
 
-import { Categoria } from "../model/entities/Categoria";
+import { Categoria, getCategoriaById } from "../model/entities/Categoria";
 
 import { InputValorLancamentoComponent } from "../components/InputValorLancamentoComponent";
 import CategoriasComponent from "../components/CategoriasComponent";
 import { Provisao } from "../model/types/Provisao";
-import { createLancamento } from "../api/lancamento-service";
+import { save } from "../api/lancamento-service";
 import Toast from "react-native-toast-message";
-import { err } from "react-native-svg/lib/typescript/xml";
+import { formatFloat } from "../utils/NumberUtils";
 
 class ProvisaoView extends React.Component<any, any> {
   state = {
     topContainerCol: "rgba(224,23,23,0.93)",
     backColor1: "rgba(255,255,255,1)",
     backColor2: "rgba(255,255,255,0)",
+    id: undefined,
     recDesp: -1,
     descricao: "",
     diaVenc: "",
@@ -26,6 +26,24 @@ class ProvisaoView extends React.Component<any, any> {
     showCategory: false,
     categoria: new Categoria(0, "Selecione", "", "category", [])
   };
+
+  componentDidMount() {
+    const lancamento: Provisao = this.props.route.params.lancamento;
+
+    if (lancamento) {
+      this.setState({
+        id: lancamento.id,
+        recDesp: lancamento.recDesp,
+        descricao: lancamento.descricao,
+        diaVenc: lancamento.diaVenc,
+        vlrLanc: formatFloat(lancamento.valor),
+        categoria: getCategoriaById(lancamento.categoria),
+        topContainerCol: lancamento.recDesp == -1 ? "rgba(224,23,23,0.93)" : "rgb(36,171,64)",
+        backColor1: lancamento.recDesp == -1 ? "rgba(255,255,255,1)" : "rgba(255,255,255,0)",
+        backColor2: lancamento.recDesp == -1 ? "rgba(255,255,255,0)" : "rgba(255,255,255,1)"
+      });
+    }
+  }
 
   onChangeVlr = (vlrLanc: String) => {
     this.setState({ vlrLanc });
@@ -42,6 +60,7 @@ class ProvisaoView extends React.Component<any, any> {
     const { descricao, vlrLanc } = this.state;
 
     const lancamento: Provisao = {
+      id: this.state.id,
       descricao: descricao,
       valor: Number.parseFloat(vlrLanc.replace(",", ".")),
       diaVenc: Number.parseInt(this.state.diaVenc),
@@ -50,7 +69,7 @@ class ProvisaoView extends React.Component<any, any> {
       provisao: true
     };
 
-    createLancamento(lancamento)
+    save(lancamento)
       .then(res => {
         this.props.route.params.updateView();
         this.props.navigation.goBack();
